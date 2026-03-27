@@ -1,91 +1,146 @@
-{# Normalize footer_classes - handle both array and string formats #}
-{% set additional_classes = footer_classes|default('') %}
-{% if additional_classes is iterable %}
-  {% set additional_classes = additional_classes|join(' ') %}
-{% endif %}
-
-{% set footer_variants = html_cva(base: ['flex', 'flex-col']) %}
-
-{% set footer_top_variants =
-  html_cva(base: ['flex w-full flex-col justify-between gap-6 py-8 md:grid md:grid-cols-2 md:gap-6 [&_li]:text-lg', 'border-t border-border'])
-%}
-
-{% set footer_first_col_variants = html_cva(base: ['flex', 'flex-col', 'gap-6', '[&_.branding]:h-8']) %}
-
-{% set footer_last_col_variants =
-  html_cva(base: ['flex flex-col gap-2 md:mx-0 md:ms-auto md:w-xs lg:w-md', '[&_form]:flex [&_form]:flex-row [&_form]:gap-2 md:[&_form]:items-end'])
-%}
-
-{% set footer_bottom_variants =
-  html_cva(
-    base: [
-      'flex w-full flex-col gap-2 py-3 [&_li]:text-xs [&_li]:md:text-sm [&_li]:xl:text-md',
-      'md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:gap-6 md:py-4',
-      'border-t border-border'
-    ]
-  )
-%}
-
-{% set footer_bottom_col_variants =
-  html_cva(
-    base: ['site-footer--bottom-col'],
-    variants: {
-      align: {
-        left: '',
-        right: ['md:flex md:justify-end']
-      }
-    }
-  )
-%}
-
-<section class="site-footer container mx-auto px-4">
-  <div class="{{ footer_variants.apply({}, additional_classes) }}">
-    <div class="{{ footer_top_variants.apply({}) }}">
-      {% if block('footer_first') is defined %}
-        <div class="{{ footer_first_col_variants.apply({}) }}">
-          {% block footer_first %}
-            {# Slot for components. #}
-          {% endblock %}
+<footer class="bg-foreground text-background">
+  {# ── Newsletter ─────────────────────────────────────────────────── #}
+  <div class="border-b border-background/10">
+    <div class="container mx-auto px-4 py-14 md:py-16">
+      <div class="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+        <div class="flex max-w-md flex-col gap-3">
+          <span class="text-xs font-bold tracking-widest text-primary uppercase">Newsletter</span>
+          <h2 class="text-2xl leading-snug font-bold text-background md:text-3xl">Resta aggiornato sul mondo Drupal</h2>
+          <p class="text-sm leading-relaxed text-background/60">
+            Notizie, tutorial e risorse della community italiana. Niente spam, solo contenuti di valore.
+          </p>
         </div>
-      {% endif %}
 
-      {% if block('footer_last') is defined %}
-        <div class="{{ footer_last_col_variants.apply({}) }}">
-          {% block footer_last %}
-            {# Slot for components. #}
-          {% endblock %}
-        </div>
-      {% endif %}
-    </div>
-
-    <div class="{{ footer_bottom_variants.apply({}) }}">
-      {% if block('footer_utility_first') is defined %}
-        <div
-          class="{{
-          footer_bottom_col_variants.apply({
-            align: 'left'
-          })
-          }}"
-        >
-          {% block footer_utility_first %}
-            {# Slot for components. #}
-          {% endblock %}
-        </div>
-      {% endif %}
-
-      {% if block('footer_utility_last') is defined %}
-        <div
-          class="{{
-          footer_bottom_col_variants.apply({
-            align: 'right'
-          })
-          }}"
-        >
-          {% block footer_utility_last %}
-            {# Slot for components. #}
-          {% endblock %}
-        </div>
-      {% endif %}
+        <form class="flex w-full flex-col gap-3 sm:flex-row md:max-w-sm" onsubmit="return false;">
+          <label for="newsletter-email" class="sr-only">Il tuo indirizzo email</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            placeholder="La tua email"
+            class="flex-1 rounded-full border border-background/20 bg-background/10 px-5 py-3 text-sm text-background placeholder-background/40 transition-all duration-200 focus:border-primary focus:bg-background/15 focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="shrink-0 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:bg-primary/90 active:scale-[0.98]"
+          >
+            Iscriviti
+          </button>
+        </form>
+      </div>
     </div>
   </div>
-</section>
+
+  {# ── Corpo principale ────────────────────────────────────────────── #}
+  <div class="container mx-auto px-4 py-14 md:py-16">
+    <div class="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-24">
+      {# Colonna brand — sinistra #}
+      <div class="flex w-full max-w-md flex-col gap-5 lg:w-120">
+        <div class="flex items-center gap-3">
+          <span class="text-xl font-bold tracking-tight text-background">Drupal Italia</span>
+        </div>
+        <p class="text-sm leading-relaxed text-background/55">
+          La comunità italiana di Drupal. Uniamo sviluppatori, designer e professionisti digitali appassionati di open source.
+        </p>
+      </div>
+
+      {# Menu — destra #}
+      <div class="grid grid-cols-2 gap-12 md:gap-20">
+        {# Colonna Community #}
+        <div class="flex w-full flex-col gap-5 lg:w-60">
+          <h3 class="text-sm font-bold tracking-widest text-background/50 uppercase">Community</h3>
+          <ul class="flex flex-col gap-3">
+            {% for item in [
+              {
+                label: 'Forum',
+                href: '#'
+              },
+              {
+                label: 'Slack',
+                href: '#'
+              },
+              {
+                label: 'Meetup',
+                href: '#'
+              },
+              {
+                label: 'DrupalCamp',
+                href: '#'
+              },
+              {
+                label: 'Contribuisci',
+                href: '#'
+              }
+            ] %}
+              <li>
+                <a href="{{ item.href }}" class="text-sm text-background/60 transition-colors duration-200 hover:text-background">{{ item.label }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {# Colonna Risorse #}
+        <div class="flex w-full flex-col gap-5 lg:w-60">
+          <h3 class="text-sm font-bold tracking-widest text-background/50 uppercase">Risorse</h3>
+          <ul class="flex flex-col gap-3">
+            {% for item in [
+              {
+                label: 'Blog',
+                href: '/blog'
+              },
+              {
+                label: 'Tutorial',
+                href: '/tutorial'
+              },
+              {
+                label: 'Documentazione',
+                href: '#'
+              },
+              {
+                label: 'Progetti',
+                href: '#'
+              },
+              {
+                label: 'Moduli consigliati',
+                href: '#'
+              }
+            ] %}
+              <li>
+                <a href="{{ item.href }}" class="text-sm text-background/60 transition-colors duration-200 hover:text-background">{{ item.label }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {# Slot per contenuto dinamico aggiuntivo (footer_first / footer_last) #}
+    {% block footer_first %}
+
+    {% endblock %}
+    {% block footer_last %}
+
+    {% endblock %}
+  </div>
+
+  {# ── Bottom bar ──────────────────────────────────────────────────── #}
+  <div class="border-t border-background/10">
+    <div class="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-5 sm:flex-row">
+      <p class="text-xs text-background/40">
+        © {{ 'now'|date('Y') }} Drupal Italia. Contenuti rilasciati sotto licenza
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="underline transition-colors duration-200 hover:text-background">
+          CC BY-SA 4.0
+        </a>.
+      </p>
+      <p class="text-xs text-background/40">
+        Sito a cura di
+        <a
+          href="https://www.alexpezzini.it"
+          title="Alex Pezzini - Consulenza Drupal"
+          class="underline transition-colors duration-200 hover:text-background"
+        >
+          Alex Pezzini
+        </a>.
+      </p>
+    </div>
+  </div>
+</footer>

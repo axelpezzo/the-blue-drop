@@ -3,6 +3,49 @@
 @import "../components/navbar/navbar.tailwind.css";
 @import "../components/anchor/anchor.tailwind.css";
 
+@keyframes hero-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-gradient-primary {
+  background: linear-gradient(-45deg, var(--primary), color-mix(in oklch, var(--primary) 60%, var(--accent)), var(--primary), color-mix(in oklch, var(--primary) 75%, var(--secondary-foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+.hero-gradient-secondary {
+  background: linear-gradient(-45deg, var(--secondary), color-mix(in oklch, var(--secondary) 70%, var(--muted-foreground)), var(--secondary), color-mix(in oklch, var(--secondary) 80%, var(--foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+.hero-gradient-accent {
+  background: linear-gradient(-45deg, var(--accent), color-mix(in oklch, var(--accent) 65%, var(--primary)), var(--accent), color-mix(in oklch, var(--accent) 70%, var(--secondary-foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+.hero-gradient-muted {
+  background: linear-gradient(-45deg, var(--muted), color-mix(in oklch, var(--muted) 70%, var(--secondary-foreground)), var(--muted), color-mix(in oklch, var(--muted) 60%, var(--muted-foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+.hero-gradient-foreground {
+  background: linear-gradient(-45deg, var(--foreground), color-mix(in oklch, var(--foreground) 80%, var(--primary)), var(--foreground), color-mix(in oklch, var(--foreground) 70%, var(--secondary-foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+.hero-gradient-secondary-foreground {
+  background: linear-gradient(-45deg, var(--secondary-foreground), color-mix(in oklch, var(--secondary-foreground) 75%, var(--primary)), var(--secondary-foreground), color-mix(in oklch, var(--secondary-foreground) 80%, var(--foreground)));
+  background-size: 300% 300%;
+  animation: hero-gradient-shift 16s ease infinite;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

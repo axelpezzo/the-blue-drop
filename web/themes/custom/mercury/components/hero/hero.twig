@@ -1,6 +1,5 @@
 {% set hero_variant = variant|default('big') %}
 {% set hero_text_color = text_color|default('light') %}
-{% set hero_bg_color = background_color|default('primary') %}
 {% set hero_heading_level = heading_level|default(1) %}
 {% set hero_align = content_align|default('center') %}
 
@@ -10,21 +9,23 @@
   {% set additional_classes = additional_classes|join(' ') %}
 {% endif %}
 
+{% set hero_bg_color = background_color|default('primary') %}
+
 {% set hero_variants =
   html_cva(
     base: ['relative flex items-center justify-center overflow-hidden'],
     variants: {
       variant: {
-        big: ['min-h-[60vh] min-h-[400px] py-16 md:py-20 xl:py-24'],
-        small: ['min-h-[250px] py-12 md:py-14 xl:py-16']
+        big: ['min-h-[75vh] min-h-[500px] py-20 md:py-24 xl:py-32'],
+        small: ['min-h-[315px] py-14 md:py-16 xl:py-20']
       },
       backgroundColor: {
-        primary: 'bg-primary',
-        secondary: 'bg-secondary',
-        foreground: 'bg-foreground',
-        'secondary-foreground': 'bg-secondary-foreground',
-        accent: 'bg-accent',
-        muted: 'bg-muted'
+        primary: 'hero-gradient-primary',
+        secondary: 'hero-gradient-secondary',
+        accent: 'hero-gradient-accent',
+        muted: 'hero-gradient-muted',
+        foreground: 'hero-gradient-foreground',
+        'secondary-foreground': 'hero-gradient-secondary-foreground'
       }
     }
   )
@@ -71,15 +72,21 @@
 <section
   class="{{
   hero_variants.apply(
-    {
-      variant: hero_variant,
-      backgroundColor: hero_bg_color
-    },
+    { variant: hero_variant, backgroundColor: hero_bg_color },
     additional_classes
   )
   }}"
 >
-  {# Content #}
+
+  {# ── Decorazioni geometriche ────────────────────────────────────── #}
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full border border-foreground/10"></div>
+    <div class="absolute -bottom-20 -right-20 w-64 h-64 rounded-full border border-foreground/8"></div>
+    <div class="absolute -top-16 -left-16 w-48 h-48 rounded-full border border-foreground/10"></div>
+    <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent"></div>
+  </div>
+
+  {# ── Content ────────────────────────────────────────────────────── #}
   <div
     class="{{
     content_variants.apply({
@@ -109,7 +116,7 @@
 
     {# Description #}
     {% if description is not empty %}
-      <p class="{{ hero_variant == 'big' ? 'text-lg md:text-xl xl:text-2xl' : 'text-base md:text-lg xl:text-xl' }}">
+      <p class="{{ hero_variant == 'big' ? 'text-lg md:text-xl xl:text-2xl max-w-2xl' : 'text-base md:text-lg xl:text-xl max-w-xl' }} opacity-90">
         {{ description }}
       </p>
     {% endif %}
@@ -152,4 +159,5 @@
       </div>
     {% endif %}
   </div>
+
 </section>
