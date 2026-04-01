@@ -1,0 +1,69 @@
+{#
+/**
+ * Template per events — page_1 (pagina elenco eventi).
+ * Layout: hero small → breadcrumb → lista verticale di card teaser.
+ * I nodi vengono renderizzati in view mode "teaser" (card orizzontali).
+ */
+#}
+
+{# ── Hero ─────────────────────────────────────────────────────────── #}
+{{
+  include(
+    'mercury:hero',
+    {
+      variant: 'small',
+      background_color: 'foreground',
+      text_color: 'light',
+      content_align: 'left',
+      heading_level: 1,
+      heading_text: 'Eventi'
+    },
+    with_context: false
+  )
+}}
+
+{# ── Breadcrumb ────────────────────────────────────────────────────── #}
+{% if page_breadcrumb is not empty %}
+  <div class="container mx-auto px-4 py-3">
+    {{ page_breadcrumb }}
+  </div>
+{% endif %}
+
+{# ── Contenuto ─────────────────────────────────────────────────────── #}
+<div class="container mx-auto px-4 py-10 md:py-14">
+
+  {% if exposed %}
+    <div class="view-filters mb-8">
+      {{ exposed }}
+    </div>
+  {% endif %}
+
+  {% if header %}
+    <div class="view-header mb-6">
+      {{ header }}
+    </div>
+  {% endif %}
+
+  {% if rows %}
+    <div class="view-content flex flex-col gap-4">
+      {{ rows }}
+    </div>
+  {% elseif empty %}
+    <div class="view-empty py-16 text-center text-foreground/50">
+      {{ empty }}
+    </div>
+  {% endif %}
+
+  {% if pager %}
+    <div class="mt-10">
+      {{ pager }}
+    </div>
+  {% endif %}
+
+  {% if footer %}
+    <div class="view-footer mt-8">
+      {{ footer }}
+    </div>
+  {% endif %}
+
+</div>

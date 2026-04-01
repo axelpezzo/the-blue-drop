@@ -125,12 +125,12 @@ final class ThemeHooks {
   /**
    * Node types that render their own hero and manage title/breadcrumb themselves.
    */
-  private const HERO_NODE_TYPES = ['blog_post', 'tutorial', 'content_page'];
+  private const HERO_NODE_TYPES = ['blog_post', 'tutorial', 'content_page', 'event'];
 
   /**
    * View routes that render their own hero and manage title/breadcrumb themselves.
    */
-  private const HERO_VIEW_ROUTES = ['view.blog.page_2', 'view.tutorial.page_1'];
+  private const HERO_VIEW_ROUTES = ['view.blog.page_2', 'view.tutorial.page_1', 'view.events.page_1'];
 
   /**
    * Implements template_preprocess_page().
@@ -244,6 +244,14 @@ final class ThemeHooks {
           }
         }
         $links[] = Link::createFromRoute($node->label(), '<none>');
+      }
+      elseif ($node->bundle() === 'event') {
+        // Event: Home > Eventi > [Title]
+        $links = [
+          Link::createFromRoute($this->t('Home'), '<front>'),
+          new Link($this->t('Eventi'), Url::fromRoute('view.events.page_1')),
+          Link::createFromRoute($node->label(), '<none>'),
+        ];
       }
       elseif ($node->bundle() === 'content_page') {
         // Content page: Home > [Title]
@@ -415,6 +423,31 @@ final class ThemeHooks {
       ];
       $tree = $this->menuLinkTree->transform($tree, $manipulators);
       $variables['tutorial_menu'] = $this->menuLinkTree->build($tree);
+    }
+
+    if ($view->id() === 'events' && $view->current_display === 'page_1') {
+      // Build breadcrumb for the events listing page.
+      $variables['page_breadcrumb'] = $this->breadcrumb
+        ->build($this->routeMatch)
+        ->toRenderable();
+    }
+  }
+
+  /**
+   * Implements hook_preprocess_breadcrumb().
+   *
+   * Signals the breadcrumb template to hide the last item on mobile only when
+   * rendering a full node page (where the title is already shown in the hero).
+   */
+  #[Hook('preprocess_breadcrumb')]
+  public function preprocessBreadcrumb(array &$variables): void {
+    $node = $this->routeMatch->getParameter('node');
+    if (
+      $this->routeMatch->getRouteName() === 'entity.node.canonical'
+      && $node instanceof NodeInterface
+      && $node->bundle() !== 'content_page'
+    ) {
+      $variables['hide_last_mobile'] = TRUE;
     }
   }
 

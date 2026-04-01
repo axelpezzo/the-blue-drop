@@ -11,7 +11,7 @@
 {% if breadcrumb %}
   {% set needs_truncation = (breadcrumb|length) > 3 %}
 
-  {% set item_classes = 'flex items-center text-sm md:text-md' %}
+  {% set item_classes = 'flex items-center text-xs md:text-sm' %}
 
   <nav aria-label="breadcrumb" class="container mx-auto my-2 w-full md:my-3 2xl:my-4">
     <h2 id="system-breadcrumb" class="sr-only">{{ 'Breadcrumb' }}</h2>
@@ -69,7 +69,7 @@
         {# Render breadcrumb item #}
         {% if should_show %}
           {% if loop.last %}
-            <li class="{{ item_classes }} active" aria-current="page">{{ item.text }}</li>
+            <li class="{{ item_classes }} active {{ hide_last_mobile ?? false ? 'hidden sm:flex' : '' }}" aria-current="page">{{ item.text }}</li>
           {% elseif item.url and not is_first %}
             <li class="{{ item_classes }}">
               <a href="{{ item.url }}" class="no-underline hover:underline hover:underline-offset-2 focus:underline">{{ item.text }}</a>
@@ -78,7 +78,7 @@
 
           {# Add chevron after item (except last) #}
           {% if not loop.last and (not needs_truncation or is_last_two or is_first) %}
-            <li aria-hidden="true">
+            <li aria-hidden="true" class="{{ (hide_last_mobile ?? false) and loop.revindex == 2 ? 'hidden sm:flex' : '' }}">
               {{
                 include(
                   '@mercury/components/icon/icon.twig',
