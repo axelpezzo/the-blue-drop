@@ -1,0 +1,30 @@
+uuid: 489bbe90-525d-4517-a952-cec2746259e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.p_block_comp.field_comp_cons
+    - field.field.paragraph.p_block_comp.field_comp_pro
+    - paragraphs.paragraphs_type.p_block_comp
+  module:
+    - text
+id: paragraph.p_block_comp.default
+targetEntityType: paragraph
+bundle: p_block_comp
+mode: default
+content:
+  field_comp_cons:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_comp_pro:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

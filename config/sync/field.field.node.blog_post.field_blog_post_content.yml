@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_blog_post_content
     - node.type.blog_post
+    - paragraphs.paragraphs_type.p_block_comp
     - paragraphs.paragraphs_type.p_block_image
     - paragraphs.paragraphs_type.p_block_links
     - paragraphs.paragraphs_type.p_block_related_content
@@ -27,10 +28,14 @@ settings:
     target_bundles:
       p_block_image: p_block_image
       p_block_text: p_block_text
+      p_block_comp: p_block_comp
       p_block_links: p_block_links
       p_block_related_content: p_block_related_content
     negate: 0
     target_bundles_drag_drop:
+      p_block_comp:
+        weight: 6
+        enabled: true
       p_block_image:
         weight: 3
         enabled: true

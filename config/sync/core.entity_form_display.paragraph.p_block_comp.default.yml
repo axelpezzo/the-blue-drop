@@ -1,0 +1,34 @@
+uuid: 311fee37-349b-41ca-a475-8c8eedaeee6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.p_block_comp.field_comp_cons
+    - field.field.paragraph.p_block_comp.field_comp_pro
+    - paragraphs.paragraphs_type.p_block_comp
+  module:
+    - text
+id: paragraph.p_block_comp.default
+targetEntityType: paragraph
+bundle: p_block_comp
+mode: default
+content:
+  field_comp_cons:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_comp_pro:
+    type: text_textarea
+    weight: 0
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

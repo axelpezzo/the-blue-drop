@@ -9,9 +9,11 @@ items:
   - block.views_block.blog-block_1
   - block.views_block.blog-block_2
   - block.views_block.blog-block_3
+  - block.views_block.blog-block_4
   - block.views_block.events-block_1
   - block.views_block.events-block_2
   - block.views_block.events-block_3
+  - block.views_block.events-block_4
   - block.views_block.recent_pages-block_recent_pages
   - block.views_block.tutorial-block_1
   - block.views_block.tutorial-block_2

@@ -1,0 +1,19 @@
+uuid: c415f753-7eb1-41b3-ab79-c31c188c1d65
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_comp_pro
+field_name: field_comp_pro
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

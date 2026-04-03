@@ -1,0 +1,10 @@
+uuid: ceb76857-08a8-45dd-99bb-bdd133e6d306
+langcode: en
+status: true
+dependencies: {  }
+id: p_block_comp
+label: 'Block comparison'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
